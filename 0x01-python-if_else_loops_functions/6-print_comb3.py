@@ -3,7 +3,7 @@ delm = ", "
 for number in range(1, 100):
     if number < 10:
         num_str = '0' + str(number)
-        print(f"{num_str}", end=delm)
+        print("{}".format(num_str), end=delm)
     else:
         number1 = number
         while number1 > 0:
@@ -19,4 +19,4 @@ for number in range(1, 100):
         if number == 89:
             delm = "\n"
         if eq_ch == 1:
-            print(f"{number1}", end=delm)
+            print("{}".format(number1), end=delm)

@@ -6,4 +6,4 @@ def uppercase(stri):
             to_upper += chr(ord(char) - 32)
         else:
             to_upper += char
-    print(f"{to_upper}")
+    print("{}".format(to_upper))
