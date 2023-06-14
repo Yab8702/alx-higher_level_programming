@@ -1,0 +1,14 @@
+#!/usr/bin/python3
+def roman_to_int(roman_string):
+    number = 0
+    if isinstance(roman_string, str):
+        roman_dic = {
+                'I': 1, 'V': 5, 'X': 10, 'L': 50,
+                'C': 100, 'D': 500, 'M': 1000
+                }
+        for s_str in roman_string:
+            if roman_dic.get(s_str, 0) == 0:
+                return 0
+            number += roman_dic[s_str]
+        return number
+    return 0
