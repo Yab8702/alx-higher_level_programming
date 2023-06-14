@@ -11,7 +11,7 @@ def roman_to_int(roman_string):
                 return 0
             if i != len(roman_string) - 1 and \
                     roman_dic[s_str] < roman_dic[roman_string[i + 1]]:
-                number += roman_dic[roman_string[i]]-roman_dic[s_str]
+                number += roman_dic[roman_string[i]] * -1
             else:
                 number += roman_dic[s_str]
         return number
