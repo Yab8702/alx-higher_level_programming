@@ -49,14 +49,14 @@ void print_python_bytes(PyObject *p)
 	size = ((PyVarObject *)p)->ob_size;
 	printf("  size: %ld\n", size);
 	printf("  trying string: %s\n", bytes->ob_sval);
-	limit = size < 10 ? size : 10;
+	limit = size < 10 ? size + 1 : 10;
 	printf("  first %ld bytes: ", limit);
 	for (i = 0; i < limit; i++)
 	{
 		printf("%02hhx", bytes->ob_sval[i]);
-		if (i < limit - 1)
-			printf(" ");
-		else
+		if (i == (limit - 1))
 			printf("\n");
+		else
+			printf(" ");
 	}
 }
