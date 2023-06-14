@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <Python.h>
 
+void print_python_list(PyObject *p);
+void print_python_bytes(PyObject *p);
+
 /**
  * print_python_list - Prints basic info about Python lists.
  * @p: A PyObject list object.
@@ -9,21 +12,23 @@
 void print_python_list(PyObject *p)
 {
 	Py_ssize_t size = PyList_Size(p);
-	PyListObject *list = (PyListObject *) p;
+	PyListObject *list = (PyListObject *)p;
 	Py_ssize_t i;
 	PyObject *item;
+	const char *type;
 
 	printf("[*] Python list info\n");
 	printf("[*] Size of the Python List = %ld\n", size);
 	printf("[*] Allocated = %ld\n", list->allocated);
 	for (i = 0; i < size; i++)
 	{
-		item = PySequence_GetItem(p, i);
-		printf("Element %ld: %s\n", i, item->ob_type->tp_name);
-		Py_DECREF(item);
+		item = list->ob_item[i];
+		type = item->ob_type->tp_name;
+		printf("Element %ld: %s\n", i, type);
+		if (strcmp(type, "bytes") == 0)
+			print_python_bytes(item);
 	}
 }
-
 /**
  * print_python_bytes - Prints basic info about Python byte objects.
  * @p: A PyObject byte object.
