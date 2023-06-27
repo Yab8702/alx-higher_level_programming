@@ -19,7 +19,7 @@ void print_python_list(PyObject *p)
 	const char *type;
 
 	printf("[*] Python list info\n");
-	if (!PyList_Check(p))
+	if (strcmp(p->ob_type->tp_name, "list") != 0)
 	{
 		printf("  [ERROR] Invalid List Object\n");
 		return;
@@ -49,7 +49,7 @@ void print_python_bytes(PyObject *p)
 	Py_ssize_t i;
 
 	printf("[.] bytes object info\n");
-	if (!PyBytes_Check(p))
+	if (strcmp(p->ob_type->tp_name, "bytes") != 0)
 	{
 		printf("  [ERROR] Invalid Bytes Object\n");
 		return;
@@ -78,7 +78,7 @@ void print_python_float(PyObject *p)
 	PyFloatObject *float_obj = (PyFloatObject *)p;
 
 	printf("[.] float object info\n");
-	if (!PyFloat_Check(p))
+	if (strcmp(p->ob_type->tp_name, "float") != 0)
 	{
 		printf("  [ERROR] Invalid Float Object\n");
 		return;
