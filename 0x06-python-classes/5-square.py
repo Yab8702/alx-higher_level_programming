@@ -10,7 +10,7 @@ class Square:
         Args:
             size: The size Of The Square
         '''
-        self.__size = size
+        self.size = size
 
     @property
     def size(self):
@@ -32,5 +32,5 @@ class Square:
     def my_print(self):
         '''  prints in stdout the square with the character # '''
         if self.__size == 0:
-            return "\n"
+            print("")
         [print("#" * self.__size) for i in range(self.__size)]
