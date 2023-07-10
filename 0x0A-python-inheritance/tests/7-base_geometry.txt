@@ -1,171 +1,150 @@
-# 1-my_list.txt
+# 7-base_geometry.txt
+# Brennan D Baraban <375@holbertonschool.com>
 
+=============================
+How to Use 7-base_geometry.py
+=============================
 
-=======================
-How to Use 1-my_list.py
-=======================
-
-This module defines a class `MyList` that inherits from `list`.
+This modules defines a base geometry class BaseGeometry.
 
 Instantiation
 =============
 
-`MyList` can be instantiated with no arguments, which will return
-an empty list:
+``BaseGeometry`` includes no attributes, and accordingly is initialized
+with no arguments.
 
----
+::
 
->>> MyList = __import__('1-my_list').MyList
->>> my_list = MyList()
->>> type(my_list)
-<class '1-my_list.MyList'>
+    >>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
+    >>> bg = BaseGeometry()
+    >>> type(bg)
+    <class '7-base_geometry.BaseGeometry'>
 
----
+::
 
->>> print(my_list)
-[]
+    >>> print(bg) # doctest: +ELLIPSIS
+    <7-base_geometry.BaseGeometry object at ...>
 
-Or a single argument, which must be an iterable object.
+In fact, any arguments supplied to an instantiation of ``BaseGeometry`` results
+in a TypeError.
 
----
+::
 
->>> my_list = MyList([1, 2, 3])
->>> print(my_list)
-[1, 2, 3]
+    >>> bg = BaseGeometry(None)
+    Traceback (most recent call last):
+    TypeError: object() takes no parameters
 
----
+Methods
+=======
 
->>> my_list = MyList(None)
-Traceback (most recent call last):
-TypeError: 'NoneType' object is not iterable
+``BaseGeometry`` features two methods - ``area(self)`` and
+``integer_validator(self, name, value)``. ``area(...)`` is not yet
+implemented.
+
+::
+
+    >>> bg = BaseGeometry()
+    >>> print(bg.area) # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
+    <bound method BaseGeometry.area of <7-base_geometry.BaseGeometry
+     object at...>>
+
+::
+
+    >>> bg.area()
+    Traceback (most recent call last):
+    Exception: area() is not implemented
+
+The second method, ``integer_validator(...)``, validates the integer value
+of a paramter. The first parameter, ``name``, is the name of the argument to
+check. The second argument, ``value``, is the argument to check.
+
+::
+
+    >>> print(bg.integer_validator) # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
+    <bound method BaseGeometry.integer_validator of <7-base_geometry.BaseGeometry 
+    object at...>>
+
+If ``value`` is a valid integer, the function does nothing.
+
+::
 
 
-A `TypeError` will be raised for any more than one instantiation arguments.
+   >>> bg.integer_validator("valid number", 1)
 
----
+But, if ``value`` is not an integer, a ``TypeError`` is raised.
 
->>> my_list = MyList([1, 2], [3, 4])
-Traceback (most recent call last):
-TypeError: list() takes at most 1 argument (2 given)
+::
 
-Usage
-=====
+    >>> bg.integer_validator("invalid number", "number")
+    Traceback (most recent call last):
+    TypeError: invalid number must be an integer
 
-`MyList` is an inherited `list` class, and thus features the same methods.
-For instance, elements can be added to a `MyList` with the `append()` method.
+::
 
----
+    >>> bg.integer_validator("another invalid", True)
+    Traceback (most recent call last):
+    TypeError: another invalid must be an integer
 
->>> my_list = MyList()
->>> my_list.append(1)
->>> my_list.append(2)
->>> my_list.append(3)
->>> print(my_list)
-[1, 2, 3]
+::
 
-Replaced with indexing:
+    >>> bg.integer_validator("invalid tuple", (1,))
+    Traceback (most recent call last):
+    TypeError: invalid tuple must be an integer
 
----
+::
 
->>> my_list[0] = 5
->>> print(my_list)
-[5, 2, 3]
+    >>> bg.integer_validator("and another", [3])
+    Traceback (most recent call last):
+    TypeError: and another must be an integer
 
-And removed with the `remove()` method.
+::
 
----
+    >>> bg.integer_validator("more invalid testing", {3, 4})
+    Traceback (most recent call last):
+    TypeError: more invalid testing must be an integer
 
->>> my_list.remove(5)
->>> print(my_list)
-[2, 3]
+::
 
-See the documentation on Python lists for more built-in methods.
+    >>> bg.integer_validator("absolutely every possible invalid", None)
+    Traceback (most recent call last):
+    TypeError: absolutely every possible invalid must be an integer
 
-`print_sorted` Method
-=======================
+And if ``value`` is an integer, but less than or equal to zero, a ValueError
+is raised.
 
-`MyList` implements a single method - a public instance method
-`print_sorted(self)`.
+::
 
----
+    >>> bg.integer_validator("invalid int", -1)
+    Traceback (most recent call last):
+    ValueError: invalid int must be greater than 0
 
->>> my_list = MyList()
->>> print(my_list.print_sorted)
-<bound method MyList.print_sorted of []>
+::
 
-The method takes no arguments - a `TypeError` will be raised if an argument is
-provided.
+    >>> bg.integer_validator("invalid int", 0)
+    Traceback (most recent call last):
+    ValueError: invalid int must be greater than 0
 
----
+Both ``name`` and ``value`` must be provided. Otherwise, a TypeError is raised.
 
->>> my_list.print_sorted(1)
-Traceback (most recent call last):
-TypeError: print_sorted() takes 1 positional argument but 2 were given
+::
 
-The method prints the list in ascending sorted order.
+    >>> bg.integer_validator() # doctest: +NORMALIZE_WHITESPACE
+    Traceback (most recent call last):
+    TypeError: integer_validator() missing 2 required positional arguments:
+    'name' and 'value'
 
----
+::
 
->>> my_list.append(1)
->>> my_list.append(4)
->>> my_list.append(2)
->>> my_list.append(3)
->>> my_list.append(5)
->>> print(my_list)
-[1, 4, 2, 3, 5]
+    >>> bg.integer_validator(None) # doctest: +NORMALIZE_WHITESPACE
+    Traceback (most recent call last):
+    TypeError: integer_validator() missing 1 required positional argument:
+    'value'
 
----
+The method assumes the paramter ``name`` will be a string, but ``name`` of any
+type will be printed.
 
->>> my_list.print_sorted()
-[1, 2, 3, 4, 5]
+::
 
-The order of the original list is not altered after a call to the method.
-
----
-
->>> print(my_list)
-[1, 4, 2, 3, 5]
-
-Note that lists of strings are sorted lexographically.
-
----
-
->>> my_list = MyList()
->>> my_list.append("Brennan")
->>> my_list.append("Poppy")
->>> my_list.append("School")
->>> my_list.append("Holberton")
->>> my_list.append("Betty")
->>> print(my_list)
-['Brennan', 'Poppy', 'School', 'Holberton', 'Betty']
-
----
-
->>> my_list.print_sorted()
-['Betty', 'Brennan', 'Holberton', 'Poppy', 'School']
-
-Another friendly reminder that the original list is unaltered :)
-
----
-
->>> print(my_list)
-['Brennan', 'Poppy', 'School', 'Holberton', 'Betty']
-
-Nothing to sort with empty lists.
-
----
-
->>> my_list = MyList()
->>> my_list.print_sorted()
-[]
-
-If `print_sorted(...)` is called on a list of different types, a `TypeError`
-will be raised.
-
----
-
->>> my_list = MyList([1, "Betty", "Holberton", 5])
->>> my_list.print_sorted()
-Traceback (most recent call last):
-TypeError: unorderable types: str() < int()
-
+    >>> bg.integer_validator({"a": 1}, (1, 2))
+    Traceback (most recent call last):
+    TypeError: {'a': 1} must be an integer
