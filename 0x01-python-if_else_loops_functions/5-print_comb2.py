@@ -5,4 +5,4 @@ for num in range(0, 100):
         print("{}".format(0), end="")
     if num == 99:
         delm = "\n"
-    print("{}".format(number), end=delm)
+    print("{}".format(num), end=delm)
