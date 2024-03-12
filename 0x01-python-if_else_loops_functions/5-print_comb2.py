@@ -2,7 +2,7 @@
 delm = ", "
 for num in range(0, 100):
     if num < 10:
-        print(f"{0}", end="")
+        print("{}".format(0), end="")
     if num == 99:
         delm = "\n"
-    print(f"{num}", end=delm)
+    print("{}".format(number), end=delm)
