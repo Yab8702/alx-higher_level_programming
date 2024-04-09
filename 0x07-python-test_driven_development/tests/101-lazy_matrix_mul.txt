@@ -1,0 +1,74 @@
+The ``101-lazy_matrix_mul`` module
+===============================
+
+Using ``lazy_matrix_mul``
+------------------------
+
+This is an example text file in reStructuredText format.  First import
+``lazy_matrix_mul`` from the ``101-lazy_matrix_mul`` module:
+
+    >>> lazy_matrix_mul = __import__('101-lazy_matrix_mul').lazy_matrix_mul
+
+Now use it:
+
+    >>> lazy_matrix_mul([[1, 2], [3, 4]], [[1, 2], [3, 4]])
+    matrix([[ 7, 10],
+            [15, 22]])
+
+
+Test bad matrices:    
+    >>> lazy_matrix_mul([[1, 2, 3], [3, 4, 5]], [[1, 2], [3, 4]])
+    Traceback (most recent call last):
+        ...
+    ValueError: shapes (2,3) and (2,2) not aligned: 3 (dim 1) != 2 (dim 0)
+    
+Test m_a is empty:
+    >>> lazy_matrix_mul([], [[4]])
+    Traceback (most recent call last):
+        ...
+    ValueError: shapes (1,0) and (1,1) not aligned: 0 (dim 1) != 1 (dim 0)
+
+Test m_b is empty:
+    >>> lazy_matrix_mul([[4]], [[]])
+    matrix([], shape=(1, 0), dtype=float64)
+
+Test single value:
+    >>> lazy_matrix_mul([[4]], [[6]])
+    matrix([[24]])
+
+Test matrice m_a has str:
+    >>> lazy_matrix_mul([['two']], [[6]])
+    Traceback (most recent call last):
+        ...
+    TypeError: m_ contains invalid datatype for einsum
+
+Test m_b is str:
+    >>> lazy_matrix_mul([[4]], "two")
+    Traceback (most recent call last):
+        ...
+    TypeError: scalar operands are not allowed for m_
+
+Test int list:
+    >>> lazy_matrix_mul([1, 2, 3], [[4]])
+    Traceback (most recent call last):
+        ...
+    TypeError: object of type 'int' has no len()
+
+Test bad rows:
+    >>> lazy_matrix_mul([[1, 2], [3, 4, 5], [6, 7]], [[1, 2, 3], [4, 5, 6]])
+    Traceback (most recent call last):
+        ...
+    TypeError: array element has unmatched sequence sizes
+
+Test missing arguments:
+    >>> lazy_matrix_mul([[4]])
+    Traceback (most recent call last):
+        ...
+    TypeError: lazy_matrix_mul() missing 1 required positional argument: 'm_b'
+
+Test missing arguments:
+    >>> lazy_matrix_mul()
+    Traceback (most recent call last):
+        ...
+    TypeError: lazy_matrix_mul() missing 2 required positional arguments: 'm_a' and 'm_b'
+
